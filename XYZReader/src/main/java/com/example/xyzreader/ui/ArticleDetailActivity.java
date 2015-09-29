@@ -111,9 +111,11 @@ public class ArticleDetailActivity extends AppCompatActivity //AppCompatActivity
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setStatusBarTransparent() {
-        getWindow().getDecorView().setSystemUiVisibility(
-              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                  View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override

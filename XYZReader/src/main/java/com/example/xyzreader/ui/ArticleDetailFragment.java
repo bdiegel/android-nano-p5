@@ -156,7 +156,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
-            
+
             String title = mCursor.getString(ArticleLoader.Query.TITLE);
             Spanned byline = Html.fromHtml(
                   DateUtils.getRelativeTimeSpanString(

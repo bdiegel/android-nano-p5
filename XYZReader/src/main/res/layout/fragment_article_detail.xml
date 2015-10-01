@@ -130,13 +130,14 @@
 
             <TextView
                 android:id="@+id/article_body"
-                android:textAppearance="@style/ArticleBody"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
                 android:layout_marginRight="@dimen/detail_inner_horiz_margin"
                 android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
                 android:paddingBottom="@dimen/detail_body_bottom_margin"
+                android:textColor="@color/primary_text"
                 android:textColorLink="@color/accent"
                 />
 
@@ -176,14 +177,16 @@
                 android:fitsSystemWindows="true"
                 android:lineSpacingMultiplier="0.9"
                 android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-                android:textAppearance="@style/ArticleTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@android:color/white"
                 app:layout_collapseMode="pin"/>
 
             <TextView
                 android:id="@+id/article_byline"
-                android:textAppearance="@style/ArticleByline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/byline_text"
                 android:fitsSystemWindows="true"
                 />
 

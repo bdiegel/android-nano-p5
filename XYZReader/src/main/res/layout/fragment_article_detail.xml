@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fitsSystemWindows="true"
-                        android:visibility="invisible"/>
+                        />
 
                     <com.example.xyzreader.ui.AspectRatioImageView
                         android:id="@+id/photo"

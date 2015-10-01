@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -44,6 +45,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     // private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
+    private ProgressBar mLoadIndicator;
 
 //    private int mTopInset;
 //    private int mScrollY;
@@ -99,6 +101,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+        mLoadIndicator = (ProgressBar) mRootView.findViewById(R.id.load_indicator);
 
 //        mStatusBarColorDrawable = new ColorDrawable(0);
 
@@ -194,7 +197,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                           mPhotoView.setImageBitmap(bitmap);
 
                           if (bitmap != null) {
-                              Log.d(TAG, "Bitmap: " + bitmap.getHeight() + " x " + bitmap.getWidth());
+                              mLoadIndicator.setVisibility(View.GONE);
                               Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                   @Override
                                   public void onGenerated(Palette palette) {

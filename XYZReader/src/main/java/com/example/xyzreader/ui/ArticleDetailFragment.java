@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.text.Spanned;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -154,6 +156,8 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
+
+
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
 
@@ -172,6 +176,18 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             bylineView.setText(byline);
             bodyView.setText(body);
 
+            // dynamically update the position of the article text (using padding)
+            final LinearLayout headerContainer = (LinearLayout) mRootView.findViewById(R.id.meta_bar);
+            headerContainer.post(new Runnable() {
+                @Override
+                public void run() {
+                    int height = headerContainer.getHeight();
+                    NestedScrollView bodyContainer = (NestedScrollView) mRootView.findViewById(R.id.article_scroll);
+                    Log.d(TAG, "Set padding: " + height);
+                    bodyContainer.setPadding(0, height + 16, 0, 0);
+                }
+            });
+
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                   .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                       @Override
@@ -180,6 +196,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                           mPhotoView.setImageBitmap(bitmap);
 
                           if (bitmap != null) {
+                              Log.d(TAG, "Bitmap: " + bitmap.getHeight() + " x " + bitmap.getWidth());
                               Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                   @Override
                                   public void onGenerated(Palette palette) {

@@ -28,6 +28,8 @@
     <color name="icons">#212121</color>
     <color name="divider">#B6B6B6</color>
 
+
+    <color name="byline_text">#8fff</color>
     <!--<color name="window_background">#FFF5F5F5</color>-->
     <color name="window_background">#FFF5F5F5</color>
 

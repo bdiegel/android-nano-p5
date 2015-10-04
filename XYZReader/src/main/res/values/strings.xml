@@ -8,6 +8,7 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
-    <string name="transition_imageview">transition_imageview</string>
+
+    <!--<string name="transition_imageview">transition_imageview</string>-->
 
 </resources>

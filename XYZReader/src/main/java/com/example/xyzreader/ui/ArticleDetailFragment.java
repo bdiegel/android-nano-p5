@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.DateUtils;
@@ -35,7 +37,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     private static final String TAG = "ArticleDetailFragment";
 
     public static final String ARG_ITEM_ID = "item_id";
-    private static final float PARALLAX_FACTOR = 1.25f;
 
     private Cursor mCursor;
     private long mItemId;
@@ -47,10 +48,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     private ImageView mPhotoView;
     private ProgressBar mLoadIndicator;
 
-//    private int mTopInset;
-//    private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
+    private Toolbar mToolbar;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -103,8 +103,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mLoadIndicator = (ProgressBar) mRootView.findViewById(R.id.load_indicator);
 
-//        mStatusBarColorDrawable = new ColorDrawable(0);
-
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,38 +113,26 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             }
         });
 
-        bindViews();
+        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // adjust toolbar padding
+        toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
+        toolbar.getLayoutParams().height = toolbar.getLayoutParams().height + getStatusBarHeight();
 
         return mRootView;
     }
 
-//    private void updateStatusBar() {
-//        int color = 0;
-//        if (mPhotoView != null && mTopInset != 0 && mScrollY > 0) {
-//            float f = progress(mScrollY,
-//                  mStatusBarFullOpacityBottom - mTopInset * 3,
-//                  mStatusBarFullOpacityBottom - mTopInset);
-//            color = Color.argb((int) (255 * f),
-//                  (int) (Color.red(mMutedColor) * 0.9),
-//                  (int) (Color.green(mMutedColor) * 0.9),
-//                  (int) (Color.blue(mMutedColor) * 0.9));
-//        }
-//        mStatusBarColorDrawable.setColor(color);
-//    }
-
-//    static float progress(float v, float min, float max) {
-//        return constrain((v - min) / (max - min), 0, 1);
-//    }
-
-//    static float constrain(float val, float min, float max) {
-//        if (val < min) {
-//            return min;
-//        } else if (val > max) {
-//            return max;
-//        } else {
-//            return val;
-//        }
-//    }
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 
     private void bindViews() {
         if (mRootView == null) {
@@ -156,8 +142,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-
-
 
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
@@ -177,24 +161,13 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             bylineView.setText(byline);
             bodyView.setText(body);
 
-//            // dynamically update the position of the article text (using padding)
-//            final LinearLayout headerContainer = (LinearLayout) mRootView.findViewById(R.id.meta_bar);
-//            headerContainer.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    int height = headerContainer.getHeight();
-//                    NestedScrollView bodyContainer = (NestedScrollView) mRootView.findViewById(R.id.article_scroll);
-//                    Log.d(TAG, "Set padding: " + height);
-//                    bodyContainer.setPadding(0, height + 16, 0, 0);
-//                }
-//            });
-
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                   .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                       @Override
                       public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                           final Bitmap bitmap = imageContainer.getBitmap();
                           mPhotoView.setImageBitmap(bitmap);
+                          //ImageLoaderHelper.getInstance(getActivity()).getImageLoader().
 
                           if (bitmap != null) {
                               mLoadIndicator.setVisibility(View.GONE);
@@ -216,10 +189,10 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                       }
                   });
         } else {
-            mRootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A");
-            bodyView.setText("N/A");
+//            mRootView.setVisibility(View.GONE);
+//            titleView.setText("N/A");
+//            bylineView.setText("N/A");
+//            bodyView.setText("N/A");
         }
     }
 

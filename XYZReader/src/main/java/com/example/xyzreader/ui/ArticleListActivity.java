@@ -1,6 +1,7 @@
 package com.example.xyzreader.ui;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.TextView;
 
@@ -47,6 +50,10 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+        }
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_article_list);
@@ -205,8 +212,13 @@ public class ArticleListActivity extends AppCompatActivity implements
 //                          getResources().getString(R.string.transition_imageview)
 //                    );
 //                    Log.d(TAG, "options: " + options.toString());
+
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                          (Activity) view.getContext());
+
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                          ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                          ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))), options.toBundle());
+
 //                                ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))),
 //                                options.toBundle());
                 }

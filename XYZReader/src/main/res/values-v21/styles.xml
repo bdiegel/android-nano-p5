@@ -11,7 +11,7 @@
 
         <!-- Transitions -->
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <!--<item name="android:windowAllowEnterTransitionOverlap">true</item>-->
+        <!--<item name="android:windowAllowReturnTransitionOverlap">true</item>-->
     </style>
 </resources>

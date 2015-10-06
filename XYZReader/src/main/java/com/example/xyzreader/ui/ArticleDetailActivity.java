@@ -14,11 +14,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 
@@ -47,6 +50,12 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+            getWindow().setAllowEnterTransitionOverlap(false);
+            getWindow().setEnterTransition(new Slide(Gravity.BOTTOM));
+        }
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_article_detail);
@@ -60,6 +69,10 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         mPager.setPageMargin((int) TypedValue
               .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPager.setTransitionGroup(true);
+        }
 
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -84,7 +97,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                         shareFab.animate().alpha(1f).setDuration(300);
                     }
                 }
-               if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+                else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                     if (!outViews.isEmpty()) {
                         mUpButton = outViews.get(0);
                         mUpButton.animate().alpha(0f).setDuration(300);
@@ -110,6 +123,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                 mSelectedItemId = mStartId;
             }
         }
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -170,6 +184,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         // handle back arrow in toolbar:
         if (id == android.R.id.home) {
             finish();
+            //finishAfterTransition();
             return true;
         }
 

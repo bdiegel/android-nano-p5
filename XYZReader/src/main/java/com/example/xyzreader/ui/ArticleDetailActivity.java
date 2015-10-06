@@ -69,6 +69,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         mPager.setPageMargin((int) TypedValue
               .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
+        mPager.setPageTransformer(true, new SlidePagerTransformer());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mPager.setTransitionGroup(true);

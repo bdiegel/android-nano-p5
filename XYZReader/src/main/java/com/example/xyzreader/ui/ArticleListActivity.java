@@ -108,16 +108,16 @@ public class ArticleListActivity extends AppCompatActivity implements
             getWindow().getDecorView().setSystemUiVisibility(
                   View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
 
-        // adjust insets to fix status bar transparency issue
-        ViewGroup v = (ViewGroup) findViewById(R.id.root_coordinator);
-        v.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                return insets.consumeSystemWindowInsets();
-            }
-        });
+            // adjust insets to fix status bar transparency issue
+            ViewGroup v = (ViewGroup) findViewById(R.id.root_coordinator);
+            v.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                    return insets.consumeSystemWindowInsets();
+                }
+            });
+        }
     }
 
     private boolean mIsRefreshing = false;

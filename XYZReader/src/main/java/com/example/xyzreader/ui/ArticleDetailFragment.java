@@ -43,13 +43,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     private View mRootView;
     private int mMutedColor = 0xFF333333;
 
-    // private ColorDrawable mStatusBarColorDrawable;
-
     private ImageView mPhotoView;
     private ProgressBar mLoadIndicator;
 
-    private boolean mIsCard = false;
-    private int mStatusBarFullOpacityBottom;
     private Toolbar mToolbar;
 
     /**
@@ -74,9 +70,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
-
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
-        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(R.dimen.detail_card_top_margin);
 
         setHasOptionsMenu(true);
     }
@@ -189,10 +182,10 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                       }
                   });
         } else {
-//            mRootView.setVisibility(View.GONE);
-//            titleView.setText("N/A");
-//            bylineView.setText("N/A");
-//            bodyView.setText("N/A");
+            mRootView.setVisibility(View.GONE);
+            titleView.setText("N/A");
+            bylineView.setText("N/A");
+            bodyView.setText("N/A");
         }
     }
 

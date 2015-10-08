@@ -42,5 +42,5 @@
     <color name="byline_text">#8fff</color>
     <!--<color name="window_background">#FFF5F5F5</color>-->
     <color name="window_background">#FFF5F5F5</color>
-
+    <color name="window_background_2">#E8F5F5F5</color>
 </resources>
